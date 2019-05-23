@@ -1,0 +1,407 @@
+[
+  {
+    "il": "Adana",
+    "plaka": 1,
+    "durum": 0
+  },
+  {
+    "il": "Adıyaman",
+    "plaka": 2,
+    "durum": 0
+  },
+  {
+    "il": "Afyonkarahisar",
+    "plaka": 3,
+    "durum": 0
+  },
+  {
+    "il": "Ağrı",
+    "plaka": 4,
+    "durum": 0
+  },
+  {
+    "il": "Amasya",
+    "plaka": 5,
+    "durum": 0
+  },
+  {
+    "il": "Ankara",
+    "plaka": 6,
+    "durum": 0
+  },
+  {
+    "il": "Antalya",
+    "plaka": 7,
+    "durum": 0
+  },
+  {
+    "il": "Artvin",
+    "plaka": 8,
+    "durum": 0
+  },
+  {
+    "il": "Aydın",
+    "plaka": 9,
+    "durum": 0
+  },
+  {
+    "il": "Balıkesir",
+    "plaka": 10,
+    "durum": 0
+  },
+  {
+    "il": "Bilecik",
+    "plaka": 11,
+    "durum" : 0
+  },
+  {
+    "il": "Bingöl",
+    "plaka": 12,
+    "durum": 0
+  },
+  {
+    "il": "Bitlis",
+    "plaka": 13,
+    "durum": 0
+  },
+  {
+    "il": "Bolu",
+    "plaka": 14,
+    "durum": 0
+  },
+  {
+    "il": "Burdur",
+    "plaka": 15,
+    "durum": 0
+  },
+  {
+    "il": "Bursa",
+    "plaka": 16,
+    "durum": 0
+  },
+  {
+    "il": "Çanakkale",
+    "plaka": 17,
+    "durum": 0
+  },
+  {
+    "il": "Çankırı",
+    "plaka": 18,
+    "durum": 0
+  },
+  {
+    "il": "Çorum",
+    "plaka": 19,
+    "durum": 0
+  },
+  {
+    "il": "Denizli",
+    "plaka": 20,
+    "durum": 0
+  },
+  {
+    "il": "Diyarbakır",
+    "plaka": 21,
+    "durum": 0
+  },
+  {
+    "il": "Edirne",
+    "plaka": 22,
+    "durum": 0
+  },
+  {
+    "il": "Elazığ",
+    "plaka": 23,
+    "durum": 0
+  },
+  {
+    "il": "Erzincan",
+    "plaka": 24,
+    "durum": 0
+  },
+  {
+    "il": "Erzurum",
+    "plaka": 25,
+    "durum": 0
+  },
+  {
+    "il": "Eskişehir",
+    "plaka": 26,
+    "durum": 0
+  },
+  {
+    "il": "Gaziantep",
+    "plaka": 27,
+    "durum": 0
+  },
+  {
+    "il": "Giresun",
+    "plaka": 28,
+    "durum": 0
+  },
+  {
+    "il": "Gümüşhane",
+    "plaka": 29,
+    "durum": 0
+  },
+  {
+    "il": "Hakkari",
+    "plaka": 30,
+    "durum": 0
+  },
+  {
+    "il": "Hatay",
+    "plaka": 31,
+    "durum": 0
+  },
+  {
+    "il": "Isparta",
+    "plaka": 32,
+    "durum": 0
+  },
+  {
+    "il": "Mersin",
+    "plaka": 33,
+    "durum": 0
+  },
+  {
+    "il": "İstanbul",
+    "plaka": 34,
+    "durum": 0
+  },
+  {
+    "il": "İzmir",
+    "plaka": 35,
+    "durum": 1
+  },
+  {
+    "il": "Kars",
+    "plaka": 36,
+    "durum": 0
+  },
+  {
+    "il": "Kastamonu",
+    "plaka": 37,
+    "durum": 0
+  },
+  {
+    "il": "Kayseri",
+    "plaka": 38,
+    "durum": 0
+  },
+  {
+    "il": "Kırklareli",
+    "plaka": 39,
+    "durum": 0
+  },
+  {
+    "il": "Kırşehir",
+    "plaka": 40,
+    "durum": 0
+  },
+  {
+    "il": "Kocaeli",
+    "plaka": 41,
+    "durum": 0
+  },
+  {
+    "il": "Konya",
+    "plaka": 42,
+    "durum": 0
+  },
+  {
+    "il": "Kütahya",
+    "plaka": 43,
+    "durum": 0
+  },
+  {
+    "il": "Malatya",
+    "plaka": 44,
+    "durum": 0
+  },
+  {
+    "il": "Manisa",
+    "plaka": 45,
+    "durum": 0
+  },
+  {
+    "il": "Kahramanmaraş",
+    "plaka": 46,
+    "durum": 0
+  },
+  {
+    "il": "Mardin",
+    "plaka": 47,
+    "durum": 0
+  },
+  {
+    "il": "Muğla",
+    "plaka": 48,
+    "durum": 0
+  },
+  {
+    "il": "Muş",
+    "plaka": 49,
+    "durum": 0
+  },
+  {
+    "il": "Nevşehir",
+    "plaka": 50,
+    "durum": 0
+  },
+  {
+    "il": "Niğde",
+    "plaka": 51,
+    "durum": 0
+  },
+  {
+    "il": "Ordu",
+    "plaka": 52,
+    "durum": 0
+  },
+  {
+    "il": "Rize",
+    "plaka": 53,
+    "durum": 0
+  },
+  {
+    "il": "Sakarya",
+    "plaka": 54,
+    "durum": 0
+  },
+  {
+    "il": "Samsun",
+    "plaka": 55,
+    "durum": 0
+  },
+  {
+    "il": "Siirt",
+    "plaka": 56,
+    "durum": 0
+  },
+  {
+    "il": "Sinop",
+    "plaka": 57,
+    "durum": 0
+  },
+  {
+    "il": "Sivas",
+    "plaka": 58,
+    "durum": 0
+  },
+  {
+    "il": "Tekirdağ",
+    "plaka": 59,
+    "durum": 0
+  },
+  {
+    "il": "Tokat",
+    "plaka": 60,
+    "durum": 0
+  },
+  {
+    "il": "Trabzon",
+    "plaka": 61,
+    "durum": 0
+  },
+  {
+    "il": "Tunceli",
+    "plaka": 62,
+    "durum": 0
+  },
+  {
+    "il": "Şanlıurfa",
+    "plaka": 63,
+    "durum": 0
+  },
+  {
+    "il": "Uşak",
+    "plaka": 64,
+    "durum": 0
+  },
+  {
+    "il": "Van",
+    "plaka": 65,
+    "durum": 0
+  },
+  {
+    "il": "Yozgat",
+    "plaka": 66,
+    "durum": 0
+  },
+  {
+    "il": "Zonguldak",
+    "plaka": 67,
+    "durum": 0
+  },
+  {
+    "il": "Aksaray",
+    "plaka": 68,
+    "durum": 0
+  },
+  {
+    "il": "Bayburt",
+    "plaka": 69,
+    "durum": 0
+  },
+  {
+    "il": "Karaman",
+    "plaka": 70,
+    "durum": 0
+  },
+  {
+    "il": "Kırıkkale",
+    "plaka": 71,
+    "durum": 0
+  },
+  {
+    "il": "Batman",
+    "plaka": 72,
+    "durum": 0
+  },
+  {
+    "il": "Şırnak",
+    "plaka": 73,
+    "durum": 0
+  },
+  {
+    "il": "Bartın",
+    "plaka": 74,
+    "durum": 0
+  },
+  {
+    "il": "Ardahan",
+    "plaka": 75,
+    "durum": 0
+  },
+  {
+    "il": "Iğdır",
+    "plaka": 76,
+    "durum": 0
+  },
+  {
+    "il": "Yalova",
+    "plaka": 77,
+    "durum": 0
+  },
+  {
+    "il": "Karabük",
+    "plaka": 78,
+    "durum": 0
+  },
+  {
+    "il": "Kilis",
+    "plaka": 79,
+    "durum": 0
+  },
+  {
+    "il": "Osmaniye",
+    "plaka": 80,
+    "durum": 0
+  },
+  {
+    "il": "Düzce",
+    "plaka": 81,
+    "durum": 0
+  }
+]
