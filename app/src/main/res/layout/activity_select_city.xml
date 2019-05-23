@@ -3,16 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".activities.SelectCityActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/list"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="10dp"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:text="Select City"
+                android:layout_toRightOf="@id/img"/>
+
+
+            <ImageView
+                android:id="@+id/search_button"
+                android:layout_centerVertical="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/search"/>
+
+
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cityRV"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         class="android.support.v7.widget.RecyclerView">
-
-
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

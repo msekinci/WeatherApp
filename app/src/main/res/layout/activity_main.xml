@@ -14,16 +14,17 @@
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
 
-    <com.shamanland.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/addCityButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="30dp"
+        app:fabCustomSize="60dp"
+        android:layout_marginBottom="30dp"
         android:layout_above="@id/linear_layout"
+        app:rippleColor="@color/colorPrimary"
         android:layout_alignParentRight="true"
         android:src="@drawable/add_fab"
-        app:floatingActionButtonColor="#000000"
         />
 
     <LinearLayout

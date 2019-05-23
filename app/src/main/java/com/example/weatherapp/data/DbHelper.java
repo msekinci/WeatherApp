@@ -151,6 +151,37 @@ public class DbHelper extends SQLiteOpenHelper {
         return cityList;
     }
 
+    public ArrayList<HashMap<String, String>> searchCities(String string){
+
+        //Bu methodda ise tablodaki tüm değerleri alıyoruz
+        //ArrayList adı üstünde Array lerin listelendiği bir Array.Burda hashmapleri listeleyeceğiz
+        //Herbir satırı değer ve value ile hashmap a atıyoruz. Her bir satır 1 tane hashmap arrayı demek.
+        //olusturdugumuz tüm hashmapleri ArrayList e atıp geri dönüyoruz(return).
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + DbContract.MenuEntry.TABLE_NAME+" WHERE "+DbContract.MenuEntry.COLUMN_IL+" LIKE '%"+string+"%'";
+        Log.e("sele",selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<HashMap<String, String>> cityList = new ArrayList<HashMap<String, String>>();
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+                for(int i=0; i<cursor.getColumnCount();i++)
+                {
+                    map.put(cursor.getColumnName(i), cursor.getString(i));
+                }
+                cityList.add(map);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        // return kitap liste
+        return cityList;
+    }
+
+
+
     //aktif şehir ve durumları
     public ArrayList<HashMap<String, String>> activeCities(){
 
@@ -179,46 +210,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // return kitap liste
         return cityList;
     }
-    //GPS için
 
-    public void activeGPS(String durum, String lon,String lat,String id){
-        db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("gpsdurum",durum);
-        values.put("gpslat",lat);
-        values.put("gpslon",lon);
-
-        db.update("gps", values, "id = ?",new String[]{String.valueOf(id)});
-    }
-
-    //aktif şehir ve durumları
-    public ArrayList<HashMap<String, String>> getGPSStatus(){
-
-        //Bu methodda ise tablodaki tüm değerleri alıyoruz
-        //ArrayList adı üstünde Array lerin listelendiği bir Array.Burda hashmapleri listeleyeceğiz
-        //Herbir satırı değer ve value ile hashmap a atıyoruz. Her bir satır 1 tane hashmap arrayı demek.
-        //olusturdugumuz tüm hashmapleri ArrayList e atıp geri dönüyoruz(return).
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT * FROM gps";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        ArrayList<HashMap<String, String>> gpsState = new ArrayList<HashMap<String, String>>();
-        // looping through all rows and adding to list
-
-        if (cursor.moveToFirst()) {
-            do {
-                HashMap<String, String> map = new HashMap<String, String>();
-                for(int i=0; i<cursor.getColumnCount();i++)
-                {
-                    map.put(cursor.getColumnName(i), cursor.getString(i));
-                }
-                gpsState.add(map);
-            } while (cursor.moveToNext());
-        }
-        db.close();
-        // return kitap liste
-        return gpsState;
-    }
 
     private void readDataToDb(SQLiteDatabase db) throws IOException, JSONException{
         final String PLAKA = "plaka";

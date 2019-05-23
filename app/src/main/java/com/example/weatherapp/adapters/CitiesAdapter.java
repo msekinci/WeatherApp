@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.data.DbHelper;
@@ -49,20 +50,27 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
 
         holder.cityName.setText(all_cities_list.get(position).get("il"));
 
-        if (all_cities_list.get(position).get("durum").equals("1") ){
+        if (all_cities_list.get(position).get("durum").equals("1")){
             holder.cityCheckBox.setChecked(true);
-        }else{
+
+        }
+        else{
             holder.cityCheckBox.setChecked(false);
         }
+
 
         holder.cityCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.cityCheckBox.isChecked()){
-
                     dbHelper.kitapDuzenle("1",all_cities_list.get(position).get("plaka"));
                 }else {
-                    dbHelper.kitapDuzenle("0",all_cities_list.get(position).get("plaka"));
+                    /*if (all_cities_list.get(position).get("il").equals("Elazığ")){
+                        holder.cityCheckBox.setChecked(true);
+                        Toast.makeText(context, "GPS açık olduğu için bu şehri kapatamazsınız!", Toast.LENGTH_SHORT).show();
+                    }else{*/
+                        dbHelper.kitapDuzenle("0",all_cities_list.get(position).get("plaka"));
+                    /*}*/
                 }
             }
         });

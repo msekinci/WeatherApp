@@ -4,13 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.weatherapp.GPStracker;
 import com.example.weatherapp.R;
 import com.example.weatherapp.ResApi.ManagerAll;
 import com.example.weatherapp.adapters.SwipeAdapter;
@@ -18,7 +22,6 @@ import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.fragments.HomeFragment;
 import com.example.weatherapp.models.LocationModel;
 import com.example.weatherapp.models.SuperClass;
-import com.shamanland.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,18 +37,16 @@ public class MainActivity extends AppCompatActivity {
     private SwipeAdapter swipeAdapter;
     private LinearLayout homeLayout, settingLayout;
 
-    ArrayList<HashMap<String, String>> gps_state_list;
-
-
-
-    public static ArrayList<HashMap<String, String>> active = new ArrayList<>();
-
-
-
-
-
     private DbHelper dbHelper;
+    public static boolean gps_state;
 
+    public String oldlatlng=null;
+
+
+    @Override
+    public void onBackPressed() {
+        System.exit(0);
+    }
 
 
     @Override
@@ -53,8 +54,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         dbHelper = new DbHelper(getApplicationContext());
 
+
+        GPStracker gpStracker = new GPStracker(MainActivity.this);
+        Location l = gpStracker.getLocation();
+        if (l!=null){
+            gps_state=true;
+            double lat = l.getLatitude();
+            double lon = l.getLongitude();
+            String latlng = String.valueOf(lat)+","+String.valueOf(lon);
+            oldlatlng=latlng;
+            getLocation(latlng,true);
+            Toast.makeText(MainActivity.this, "Konumunuz listeye eklendi.", Toast.LENGTH_SHORT).show();
+
+        }else{
+            gps_state=false;
+            if (oldlatlng!=null){
+                getLocation(oldlatlng,false);
+            }
+        }
 
         //Anasayfada seçili şehir kontrolü yapıyor ve eğe rhiç şehir yoksa izmiri aktifleştiriyor
         int count = dbHelper.getActiveRowCount();
@@ -63,9 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
         tanimla();
         click();
-
     }
-
     public void tanimla(){
 
 
@@ -86,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
         homeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().add(R.id.home_viewPager, new HomeFragment()).commit();
+                finish();
+                startActivity(getIntent());
             }
         });
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +120,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,SettingActivity.class);
                 startActivity(i);
+            }
+        });
+    }
+
+    public void getLocation(String latlng, final boolean isAdd){
+        Call<LocationModel> req = ManagerAll.getInstance().getLocation(latlng);
+        req.enqueue(new Callback<LocationModel>() {
+            @Override
+            public void onResponse(Call<LocationModel> call, Response<LocationModel> response) {
+                if (isAdd){
+                    dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
+                }else{
+                    dbHelper.activeCityWithName("0",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
+                }
+            }
+            @Override
+            public void onFailure(Call<LocationModel> call, Throwable t) {
+                Log.e("TAG:",t.toString());
             }
         });
     }

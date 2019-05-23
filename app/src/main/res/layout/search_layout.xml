@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/cityNameAlert"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:hint="Şehir Adı"
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@id/searchAlert"
+                android:layout_height="40dp"
+                android:background="@drawable/edittextbackground"/>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/searchAlert"
+                android:layout_width="40dp"
+                android:layout_gravity="center"
+                android:layout_height="40dp"
+                android:background="@drawable/search2"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

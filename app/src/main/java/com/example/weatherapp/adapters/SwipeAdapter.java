@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     private DbHelper dbHelper;
-    ArrayList<HashMap<String, String>> gps_state_list;
     private Context context;
 
     public SwipeAdapter(FragmentManager fm, Context context) {
@@ -28,7 +27,6 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         //Gösterilen şehrin listedeki sırasını gönderir homefragment tarafında liste hanig sıradaysa o sırayla kaydırarak görüntülenir
         Fragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
