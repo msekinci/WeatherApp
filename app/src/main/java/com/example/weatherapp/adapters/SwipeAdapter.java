@@ -14,17 +14,11 @@ import com.example.weatherapp.fragments.HomeFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+import static com.example.weatherapp.activities.LoadActivity.active_row_count;
 public class SwipeAdapter extends FragmentStatePagerAdapter {
-
-    private DbHelper dbHelper;
-    private Context context;
-
-    public SwipeAdapter(FragmentManager fm, Context context) {
+    public SwipeAdapter(FragmentManager fm) {
         super(fm);
-        this.context = context;
     }
-
     @Override
     public Fragment getItem(int position) {
         //Gösterilen şehrin listedeki sırasını gönderir homefragment tarafında liste hanig sıradaysa o sırayla kaydırarak görüntülenir
@@ -38,9 +32,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        dbHelper = new DbHelper(context);
-        int count = dbHelper.getActiveRowCount();
-        return count;
+        return active_row_count;
     }
 }
 

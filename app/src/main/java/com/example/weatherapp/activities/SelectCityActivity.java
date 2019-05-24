@@ -39,44 +39,31 @@ public class SelectCityActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-
         Intent i = new Intent(SelectCityActivity.this,LoadActivity.class);
         startActivity(i);
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
-
         search = findViewById(R.id.search_button);
-
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openSearchAlert();
             }
         });
-
-
         citiesRV = findViewById(R.id.cityRV);
         RecyclerView.LayoutManager manager = new GridLayoutManager(SelectCityActivity.this,1);
         citiesRV.hasFixedSize();
         citiesRV.setLayoutManager(manager);
-
         progressDialog = new ProgressDialog(SelectCityActivity.this);
         progressDialog.setMessage("Kontrol edilirken bekleyiniz!");
         progressDialog.show();
-
         dbHelper = new DbHelper(getApplicationContext());
         all_cities_list = dbHelper.allCities();
-
         progressDialog.dismiss();
-
-
         citiesAdapter = new CitiesAdapter(SelectCityActivity.this,all_cities_list);
         citiesRV.setAdapter(citiesAdapter);
 
@@ -85,16 +72,12 @@ public class SelectCityActivity extends AppCompatActivity {
     public void openSearchAlert(){
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.search_layout,null);
-
         final EditText cityName = view.findViewById(R.id.cityNameAlert);
         ImageView searchAlert = view.findViewById(R.id.searchAlert);
-
         final AlertDialog.Builder alert = new AlertDialog.Builder(SelectCityActivity.this);
         alert.setView(view);
         alert.setCancelable(true); //boş bir yere tıklayınca kapat
-
         final AlertDialog alertDialog = alert.create();
-
         searchAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,9 +87,6 @@ public class SelectCityActivity extends AppCompatActivity {
                 alertDialog.cancel();
             }
         });
-
-
-
         alert.show();
     }
 }

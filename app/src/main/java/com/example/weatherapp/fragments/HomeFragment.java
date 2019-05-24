@@ -30,11 +30,6 @@ import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment {
-    public ArrayList<HashMap<String, String>> active_city_list;
-    ArrayList<HashMap<String, String>> gps_state_list;
-
-    private ProgressDialog progressDialog;
-
     private View view;
     private TextView sehirText, dereceText, nemText, ruzgarhiziText, ruzgaryonuText;
     private DbHelper dbHelper;
@@ -54,7 +49,7 @@ public class HomeFragment extends Fragment {
         int pageNumber = bundle.getInt("pageNumber");
         getCityInformation(LoadActivity.active_city_list.get(pageNumber).get("il"));
 
-        active_city_list = LoadActivity.active_city_list;
+
 
 
         sehirText = view.findViewById(R.id.sehirText);

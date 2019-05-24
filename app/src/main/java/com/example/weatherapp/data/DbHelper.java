@@ -38,13 +38,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS gps (id INTEGER PRIMARY KEY,gpsdurum VARCHAR default '0', gpslat VARCHAR, gpslon VARCHAR);");
-        db.execSQL("INSERT INTO gps(gpsdurum,gpslat,gpslon) VALUES ('0',NULL,NULL)");
-        Log.e("DATABASE: " , "GPS TABLE OLUŞTURURDU");
-
-
         final String SQL_CREATE_CITY_TABLE = "CREATE TABLE " + DbContract.MenuEntry.TABLE_NAME + " (" +
                 DbContract.MenuEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 DbContract.MenuEntry.COLUMN_PLAKA + " TEXT UNIQUE NOT NULL, " +
@@ -52,7 +45,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 DbContract.MenuEntry.COLUMN_DURUM + " TEXT NOT NULL" + " );";
 
         db.execSQL(SQL_CREATE_CITY_TABLE);
-        Log.e("DATABASE: " , "DATABASE OLUSTURULDU");
         try {
             readDataToDb(db);
         }catch (IOException e){
@@ -72,18 +64,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    public void changeState(String durum, String plaka){
-        db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(DbContract.MenuEntry.COLUMN_DURUM,durum);
-
-        db.update(DbContract.MenuEntry.TABLE_NAME, values, DbContract.MenuEntry.COLUMN_PLAKA+" = ?",
-                new String[]{ String.valueOf(plaka)});
-    }
-
-
-
     //Aktif olan şehir sayısını getir
     public int getActiveRowCount() {
         // Bu method bu uygulamada kullanılmıyor ama her zaman lazım olabilir.Tablodaki row sayısını geri döner.
@@ -98,18 +78,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return rowCount;
     }
 
-    public void kitapDuzenle(String durum,String plaka) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //Bu methodda ise var olan veriyi güncelliyoruz(update)
-        ContentValues values = new ContentValues();
-        values.put(DbContract.MenuEntry.COLUMN_DURUM, durum);
-
-        // updating row
-        db.update(DbContract.MenuEntry.TABLE_NAME, values, "plaka = "+"?",
-                new String[] { String.valueOf(plaka) });
-    }
-
-
+    //Şehrin adına göre durum güncelleme
     public void activeCityWithName(String durum,String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         //Bu methodda ise var olan veriyi güncelliyoruz(update)
@@ -151,6 +120,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return cityList;
     }
 
+    //Search yapılan şehirler ve durumları
     public ArrayList<HashMap<String, String>> searchCities(String string){
 
         //Bu methodda ise tablodaki tüm değerleri alıyoruz
@@ -180,9 +150,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return cityList;
     }
 
-
-
-    //aktif şehir ve durumları
+    //Aktif şehir ve durumları
     public ArrayList<HashMap<String, String>> activeCities(){
 
         //Bu methodda ise tablodaki tüm değerleri alıyoruz
@@ -211,7 +179,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return cityList;
     }
 
-
+    //Hazır JSON veriyi ayırma ve database'e yazma
     private void readDataToDb(SQLiteDatabase db) throws IOException, JSONException{
         final String PLAKA = "plaka";
         final String IL = "il";
@@ -240,7 +208,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
                 db.insert(DbContract.MenuEntry.TABLE_NAME, null, menuValues);
 
-                Log.e("DATABASE", "TABLO OLUSTURULDU" + menuValues);
+                Log.i("DATABASE", DbContract.MenuEntry.TABLE_NAME+" TABLOSU OLUSTURULDU" + menuValues);
 
 
             }
@@ -250,6 +218,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Dosyadan JSON veri çekme
     private String readJsonDataFromFile() throws IOException{
         InputStream inputStream = null;
         StringBuilder builder = new StringBuilder();

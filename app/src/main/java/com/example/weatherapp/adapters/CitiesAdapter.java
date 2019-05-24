@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.activities.LoadActivity;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.CityStatesModel;
 import com.example.weatherapp.models.SuperClass;
@@ -50,34 +51,26 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
 
         holder.cityName.setText(all_cities_list.get(position).get("il"));
 
+
         if (all_cities_list.get(position).get("durum").equals("1")){
             holder.cityCheckBox.setChecked(true);
-
+            if (all_cities_list.get(position).get("il").equals(LoadActivity.locationCity)){
+                holder.cityCheckBox.setEnabled(false);
+            }
         }
         else{
             holder.cityCheckBox.setChecked(false);
         }
-
-
         holder.cityCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.cityCheckBox.isChecked()){
-                    dbHelper.kitapDuzenle("1",all_cities_list.get(position).get("plaka"));
+                    dbHelper.activeCityWithName("1",all_cities_list.get(position).get("il"));
                 }else {
-                    /*if (all_cities_list.get(position).get("il").equals("Elazığ")){
-                        holder.cityCheckBox.setChecked(true);
-                        Toast.makeText(context, "GPS açık olduğu için bu şehri kapatamazsınız!", Toast.LENGTH_SHORT).show();
-                    }else{*/
-                        dbHelper.kitapDuzenle("0",all_cities_list.get(position).get("plaka"));
-                    /*}*/
+                    dbHelper.activeCityWithName("0",all_cities_list.get(position).get("il"));
                 }
             }
         });
-
-
-
-
     }
 
     @Override

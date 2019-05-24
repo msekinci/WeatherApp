@@ -1,7 +1,9 @@
 package com.example.weatherapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Location;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,8 @@ public class LoadActivity extends AppCompatActivity {
     private DbHelper dbHelper;//
     public static boolean gps_state;//
     GPStracker gpStracker;
+    public static int active_row_count;
+    public static String locationCity;
     public static ArrayList<HashMap<String, String>> active_city_list;
 
 
@@ -36,11 +40,11 @@ public class LoadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load);
 
         active_city_list = new ArrayList<>();
-        dbHelper = new DbHelper(LoadActivity.this);
+        active_city_list.clear();
 
+        dbHelper = new DbHelper(LoadActivity.this);
         gpStracker = new GPStracker(LoadActivity.this);
         Location l = gpStracker.getLocation();
-
 
         if (l!=null){
             gps_state=true;
@@ -50,17 +54,34 @@ public class LoadActivity extends AppCompatActivity {
             getLocation(latlng);
 
         }else{
+            if (locationCity!=null){
+                dbHelper.activeCityWithName("0",locationCity);
+            }
             gps_state=false;
-            int actiive_city_rows = dbHelper.getActiveRowCount();
-            if (actiive_city_rows > 0){
+            active_row_count = dbHelper.getActiveRowCount();
+            if (active_row_count > 0){
                 active_city_list=dbHelper.activeCities();
-            }else if (actiive_city_rows == 0){
+
+            }else if (active_row_count == 0){
                 dbHelper.activeCityWithName("1","İzmir");
                 active_city_list = dbHelper.activeCities();
             }
-            Intent i = new Intent(LoadActivity.this,MainActivity.class);
-            startActivity(i);
+
+            final ProgressDialog dialog = new ProgressDialog(LoadActivity.this);
+            dialog.setMessage("Şehirleriniz yükleniyor!");
+            dialog.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    Intent i = new Intent(LoadActivity.this,MainActivity.class);
+                    startActivity(i);
+                    dialog.dismiss();
+
+                }
+            }, 1000);
         }
+
+
     }
 
     public void getLocation(String latlng){
@@ -69,41 +90,42 @@ public class LoadActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LocationModel> call, Response<LocationModel> response) {
 
-
-                int active_row_count = dbHelper.getActiveRowCount();
+                active_row_count = dbHelper.getActiveRowCount();
                 active_city_list = dbHelper.activeCities();
-                Log.e("getLocation",String.valueOf(active_row_count));
-                Log.e("getLocation",active_city_list.toString());
-                Log.e("getLocation",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
-
-
+                locationCity = response.body().getResults().get(0).getAddressComponents().get(4).getShortName();
                 if (active_row_count==0){
-                    Log.e("row == 0",active_city_list.toString());
-                    dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
-                    Log.e("aktif edildi",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
+                    dbHelper.activeCityWithName("1",locationCity);
                     active_city_list = dbHelper.activeCities();
                 }else if(active_row_count>0){
                     ArrayList<HashMap<String, String>> temp_active_city = new ArrayList<>();
                     temp_active_city = dbHelper.activeCities();
                     Log.e("getLocation","büyüktür sıfıra girdi");
                     Log.e("getLocation3",temp_active_city.toString());
-
                     for (int i = 0; i<temp_active_city.size(); i++){
-                        if (temp_active_city.get(i).get("il").equals(response.body().getResults().get(0).getAddressComponents().get(4).getLongName())){
-                            active_city_list.clear();
-                            dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getLongName());
-                            active_city_list=dbHelper.activeCities();
+                        if (temp_active_city.get(i).get("il").equals(locationCity)){
                             for (int j = 0;j<active_city_list.size(); j++){
-                                if (active_city_list.get(i).get("il").equals(response.body().getResults().get(0).getAddressComponents().get(4).getLongName())){
+                                if (active_city_list.get(i).get("il").equals(locationCity)){
                                     Collections.swap(active_city_list,i,0);
                                 }
                             }
+                        }else{
+                            dbHelper.activeCityWithName("1",locationCity);
                         }
                     }
+                    active_row_count = dbHelper.getActiveRowCount();
                 }
-                Intent i = new Intent(LoadActivity.this,MainActivity.class);
-                startActivity(i);
+                final ProgressDialog dialog = new ProgressDialog(LoadActivity.this);
+                dialog.setMessage("Şehirleriniz yükleniyor!");
+                dialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        Intent i = new Intent(LoadActivity.this,MainActivity.class);
+                        startActivity(i);
+                        dialog.dismiss();
 
+                    }
+                }, 1000);
 
                 /*if (isAdd){
                     dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
