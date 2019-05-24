@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DbHelper extends SQLiteOpenHelper {
+
     private static final String TAG = DbHelper.class.getSimpleName();
 
     private Resources mResources;
     private static final String DATABASE_NAME = "iller.db";
     private static final int DATABASE_VERSION = 14;
-    Context context;
     SQLiteDatabase db;
 
     public DbHelper(Context context){

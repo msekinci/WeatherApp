@@ -15,7 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.NoConnectionActivity"></activity>
+        <activity android:name=".activities.LoadActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.NoConnectionActivity" />
         <activity android:name=".activities.SelectCityActivity" />
         <activity android:name=".activities.SettingActivity" />
         <activity android:name=".activities.MainActivity">

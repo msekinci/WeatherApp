@@ -24,6 +24,7 @@ import com.example.weatherapp.adapters.CitiesAdapter;
 import com.example.weatherapp.data.DbHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SelectCityActivity extends AppCompatActivity {
@@ -38,8 +39,11 @@ public class SelectCityActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(SelectCityActivity.this,MainActivity.class);
+
+
+        Intent i = new Intent(SelectCityActivity.this,LoadActivity.class);
         startActivity(i);
+
     }
 
     @Override

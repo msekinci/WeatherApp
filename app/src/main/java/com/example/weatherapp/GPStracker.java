@@ -33,8 +33,8 @@ public class GPStracker implements LocationListener {
             Location l = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             return l;
         }else{
-            Toast.makeText(context,"Please activate GPS in your phone settings and try again later!",Toast.LENGTH_LONG).show();
 
+            //GPS kapalıysa
         }
         return null;
     }

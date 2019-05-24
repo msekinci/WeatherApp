@@ -12,14 +12,11 @@ import android.widget.TextView;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.ResApi.ManagerAll;
-import com.example.weatherapp.activities.MainActivity;
+import com.example.weatherapp.activities.LoadActivity;
 import com.example.weatherapp.activities.NoConnectionActivity;
-import com.example.weatherapp.activities.SelectCityActivity;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.CityInformationModel;
 import com.example.weatherapp.models.DailyForecastModel;
-import com.example.weatherapp.models.LocationModel;
-import com.example.weatherapp.models.SuperClass;
 import com.example.weatherapp.models.TahminItem;
 
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment {
-    public static ArrayList<HashMap<String, String>> active_city_list;
+    public ArrayList<HashMap<String, String>> active_city_list;
     ArrayList<HashMap<String, String>> gps_state_list;
 
     private ProgressDialog progressDialog;
@@ -52,28 +49,12 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ProgressDialog dialog = new ProgressDialog(getContext());
-        dialog.show();
 
         Bundle bundle = getArguments();
+        int pageNumber = bundle.getInt("pageNumber");
+        getCityInformation(LoadActivity.active_city_list.get(pageNumber).get("il"));
 
-        if (MainActivity.gps_state) {
-            dbHelper = new DbHelper(getContext());
-            dbHelper.activeCityWithName("1", "Elazığ");
-            int pageNumber = bundle.getInt("pageNumber");
-            //getCityInformation("Elazığ");
-            active_city_list = dbHelper.activeCities();
-            getCityInformation(active_city_list.get(pageNumber).get("il"));
-            dialog.dismiss();
-
-        } else {
-            dbHelper = new DbHelper(getContext());
-            dbHelper.activeCityWithName("0", "Elazığ");
-            int pageNumber = bundle.getInt("pageNumber");
-            active_city_list = dbHelper.activeCities();
-            getCityInformation(active_city_list.get(pageNumber).get("il"));
-            dialog.dismiss();
-        }
+        active_city_list = LoadActivity.active_city_list;
 
 
         sehirText = view.findViewById(R.id.sehirText);
@@ -92,9 +73,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<List<CityInformationModel>> call, Response<List<CityInformationModel>> response) {
                 if (response.isSuccessful()) {
-                    ProgressDialog a = new ProgressDialog(getContext());
-                    a.show();
-                    getDailyForecast(response.body().get(0).getSaatlikTahminIstNo(), a);
+                    getDailyForecast(response.body().get(0).getSaatlikTahminIstNo());
                     sehirText.setText(response.body().get(0).getIl());
                 }
             }
@@ -109,7 +88,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void getDailyForecast(int id, final ProgressDialog a) {
+    public void getDailyForecast(int id) {
         final Call<List<DailyForecastModel>> request = ManagerAll.getInstance().getDailyForecastModel(id);
         request.enqueue(new Callback<List<DailyForecastModel>>() {
             @Override
@@ -121,7 +100,6 @@ public class HomeFragment extends Fragment {
                         nemText.setText(String.valueOf(tahminItems.get(response.body().size()).getNem()));
                         ruzgarhiziText.setText(String.valueOf(tahminItems.get(response.body().size()).getRuzgarHizi()));
                         ruzgaryonuText.setText(String.valueOf(tahminItems.get(response.body().size()).getRuzgarYonu()));
-                        a.dismiss();
                     }
                 }
             }

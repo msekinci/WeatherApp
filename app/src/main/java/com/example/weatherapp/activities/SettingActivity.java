@@ -26,7 +26,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(SettingActivity.this, MainActivity.class);
+        Intent i = new Intent(SettingActivity.this, LoadActivity.class);
         startActivity(i);
     }
 
@@ -38,8 +38,8 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         ActivityCompat.requestPermissions(SettingActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
 
-
         aSwitch = findViewById(R.id.aSwitch);
+        aSwitch.setChecked(LoadActivity.gps_state);
 
         aSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +48,8 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-            aSwitch.setChecked(MainActivity.gps_state);
+            //aSwitch.setChecked(MainActivity.gps_state);
+
+
     }
 }

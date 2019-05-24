@@ -54,45 +54,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        dbHelper = new DbHelper(getApplicationContext());
-
-
-        GPStracker gpStracker = new GPStracker(MainActivity.this);
-        Location l = gpStracker.getLocation();
-        if (l!=null){
-            gps_state=true;
-            double lat = l.getLatitude();
-            double lon = l.getLongitude();
-            String latlng = String.valueOf(lat)+","+String.valueOf(lon);
-            oldlatlng=latlng;
-            getLocation(latlng,true);
-            Toast.makeText(MainActivity.this, "Konumunuz listeye eklendi.", Toast.LENGTH_SHORT).show();
-
-        }else{
-            gps_state=false;
-            if (oldlatlng!=null){
-                getLocation(oldlatlng,false);
-            }
-        }
-
-        //Anasayfada seçili şehir kontrolü yapıyor ve eğe rhiç şehir yoksa izmiri aktifleştiriyor
-        int count = dbHelper.getActiveRowCount();
-            if (count == 0){
-                dbHelper.kitapDuzenle("1","35");
-        }
         tanimla();
         click();
     }
     public void tanimla(){
-
-
-
         homeLayout = findViewById(R.id.homeLayout);
         settingLayout = findViewById(R.id.settingLayout);
         floatingActionButton = findViewById(R.id.addCityButton);
-
-
         home_viewPager = findViewById(R.id.home_viewPager);
         home_viewPager.setOffscreenPageLimit(1);
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager(),getApplicationContext());
@@ -124,23 +92,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getLocation(String latlng, final boolean isAdd){
-        Call<LocationModel> req = ManagerAll.getInstance().getLocation(latlng);
-        req.enqueue(new Callback<LocationModel>() {
-            @Override
-            public void onResponse(Call<LocationModel> call, Response<LocationModel> response) {
-                if (isAdd){
-                    dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
-                }else{
-                    dbHelper.activeCityWithName("0",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
-                }
-            }
-            @Override
-            public void onFailure(Call<LocationModel> call, Throwable t) {
-                Log.e("TAG:",t.toString());
-            }
-        });
-    }
+
 
 
 }
