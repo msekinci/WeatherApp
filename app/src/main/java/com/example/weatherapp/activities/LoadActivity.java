@@ -2,6 +2,7 @@ package com.example.weatherapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,13 @@ import com.example.weatherapp.R;
 import com.example.weatherapp.ResApi.ManagerAll;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.LocationModel;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +38,10 @@ public class LoadActivity extends AppCompatActivity {
     public static int active_row_count;
     public static String locationCity;
     public static ArrayList<HashMap<String, String>> active_city_list;
+
+
+
+
 
 
     @Override
@@ -127,12 +139,6 @@ public class LoadActivity extends AppCompatActivity {
 
                     }
                 }, 500);
-
-                /*if (isAdd){
-                    dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
-                }else{
-                    dbHelper.activeCityWithName("0",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
-                }*/
             }
 
             @Override

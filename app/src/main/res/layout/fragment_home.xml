@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -22,46 +23,15 @@
                 android:layout_height="wrap_content"
                 android:textSize="40dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Currently City:"
-                android:layout_marginTop="20dp"/>
-
-            <TextView
-                android:id="@+id/sehirText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40dp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:text="" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/dereceText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="40dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
-                    android:text="" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="40dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
-                    android:text="°C" />
-
-            </LinearLayout>
-
-
+                android:text="Currently City:"/>
 
         </LinearLayout>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/piechart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"></com.github.mikephil.charting.charts.PieChart>
 
 
 
@@ -181,6 +151,8 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
 
 
 
