@@ -98,18 +98,15 @@ public class LoadActivity extends AppCompatActivity {
                 if (active_row_count == 0) {
                     dbHelper.activeCityWithName("1", locationCity);
                     active_city_list = dbHelper.activeCities();
+
+
                 } else if (active_row_count > 0) {
-                    ArrayList<HashMap<String, String>> temp_active_city = new ArrayList<>();
-                    temp_active_city = dbHelper.activeCities();
-                    Log.e("getLocation", "büyüktür sıfıra girdi");
-                    Log.e("getLocation3", temp_active_city.toString());
+                    ArrayList<HashMap<String, String>> temp_active_city = dbHelper.activeCities();
                     for (int i = 0; i < temp_active_city.size(); i++) {
                         if (temp_active_city.get(i).get("il").equals(locationCity)) {
-                            while (!active_city_list.get(0).get("il").equals(locationCity)) {
-                                for (int j = 0; j < active_city_list.size(); j++) {
-                                    if (active_city_list.get(i).get("il").equals(locationCity)) {
-                                        Collections.swap(active_city_list, i, 0);
-                                    }
+                            for (int j = 0; j < active_city_list.size(); j++) {
+                                if (active_city_list.get(j).get("il").equals(locationCity)) {
+                                    Collections.swap(active_city_list, i, 0);
                                 }
                             }
                         } else {
