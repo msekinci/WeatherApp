@@ -7,14 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
+import com.example.weatherapp.activities.LoadActivity;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.SuperClass;
 import com.example.weatherapp.fragments.HomeFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static com.example.weatherapp.activities.LoadActivity.active_row_count;
 public class SwipeAdapter extends FragmentStatePagerAdapter {
     public SwipeAdapter(FragmentManager fm) {
         super(fm);
@@ -32,7 +29,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return active_row_count;
+        return LoadActivity.active_row_count;
     }
 }
 

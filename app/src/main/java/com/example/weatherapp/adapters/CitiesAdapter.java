@@ -2,6 +2,7 @@ package com.example.weatherapp.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.activities.LoadActivity;
+import com.example.weatherapp.activities.SelectCityActivity;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.CityStatesModel;
 import com.example.weatherapp.models.SuperClass;
@@ -44,8 +46,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         //holder.cityName.setText((cities.get(position).getCityName()));
 
@@ -54,9 +54,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
 
         if (all_cities_list.get(position).get("durum").equals("1")){
             holder.cityCheckBox.setChecked(true);
-            if (all_cities_list.get(position).get("il").equals(LoadActivity.locationCity)){
-                holder.cityCheckBox.setEnabled(false);
-            }
         }
         else{
             holder.cityCheckBox.setChecked(false);
@@ -64,10 +61,23 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
         holder.cityCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (holder.cityCheckBox.isChecked()){
                     dbHelper.activeCityWithName("1",all_cities_list.get(position).get("il"));
                 }else {
+                    if (all_cities_list.get(position).get("il").equalsIgnoreCase(LoadActivity.locationCity)){
+                        if (!holder.cityCheckBox.isChecked()){
+                            Toast.makeText(context, "Konumunuz açık olduğundan bu şehir kaldırılamıyor!", Toast.LENGTH_SHORT).show();
+                            holder.cityCheckBox.setChecked(true);
+                        }
+                    }
                     dbHelper.activeCityWithName("0",all_cities_list.get(position).get("il"));
+                    if (dbHelper.getActiveRowCount()==0){
+                        Toast.makeText(context, "Hiç bir şehir kalmadığı için otomatik olarak İzmir eklendi!", Toast.LENGTH_LONG).show();
+                        dbHelper.activeCityWithName("1","İzmir");
+                        Intent i = new Intent(context, SelectCityActivity.class);
+                        context.startActivity(i);
+                    }
                 }
             }
         });

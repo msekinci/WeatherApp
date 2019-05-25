@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapters.SwipeAdapter;
+import com.example.weatherapp.data.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
 

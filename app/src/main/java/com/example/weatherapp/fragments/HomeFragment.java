@@ -47,10 +47,10 @@ public class HomeFragment extends Fragment {
 
         Bundle bundle = getArguments();
         int pageNumber = bundle.getInt("pageNumber");
+
+        Log.e("homefragment",LoadActivity.active_city_list.get(pageNumber).get("il"));
+
         getCityInformation(LoadActivity.active_city_list.get(pageNumber).get("il"));
-
-
-
 
         sehirText = view.findViewById(R.id.sehirText);
         dereceText = view.findViewById(R.id.dereceText);
@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<List<CityInformationModel>> call, Response<List<CityInformationModel>> response) {
                 if (response.isSuccessful()) {
                     getDailyForecast(response.body().get(0).getSaatlikTahminIstNo());
+                    Log.e("GET",response.body().get(0).getIl());
                     sehirText.setText(response.body().get(0).getIl());
                 }
             }

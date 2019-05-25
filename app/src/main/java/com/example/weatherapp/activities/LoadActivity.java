@@ -7,9 +7,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.weatherapp.GPStracker;
+import com.example.weatherapp.gps.GPStracker;
 import com.example.weatherapp.R;
 import com.example.weatherapp.ResApi.ManagerAll;
 import com.example.weatherapp.data.DbHelper;
@@ -33,7 +32,6 @@ public class LoadActivity extends AppCompatActivity {
     public static ArrayList<HashMap<String, String>> active_city_list;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,24 +44,25 @@ public class LoadActivity extends AppCompatActivity {
         gpStracker = new GPStracker(LoadActivity.this);
         Location l = gpStracker.getLocation();
 
-        if (l!=null){
-            gps_state=true;
+        if (l != null) {
+            gps_state = true;
             double lat = l.getLatitude();
             double lon = l.getLongitude();
-            String latlng = String.valueOf(lat)+","+String.valueOf(lon);
+            String latlng = String.valueOf(lat) + "," + String.valueOf(lon);
             getLocation(latlng);
 
-        }else{
-            if (locationCity!=null){
-                dbHelper.activeCityWithName("0",locationCity);
+        } else {
+            gps_state = false;
+            if (locationCity != null) {
+                dbHelper.activeCityWithName("0", locationCity);
             }
-            gps_state=false;
             active_row_count = dbHelper.getActiveRowCount();
-            if (active_row_count > 0){
-                active_city_list=dbHelper.activeCities();
 
-            }else if (active_row_count == 0){
-                dbHelper.activeCityWithName("1","İzmir");
+            if (active_row_count > 0) {
+                active_city_list = dbHelper.activeCities();
+
+            } else {
+                dbHelper.activeCityWithName("1", "İzmir");
                 active_city_list = dbHelper.activeCities();
             }
 
@@ -73,7 +72,7 @@ public class LoadActivity extends AppCompatActivity {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    Intent i = new Intent(LoadActivity.this,MainActivity.class);
+                    Intent i = new Intent(LoadActivity.this, MainActivity.class);
                     startActivity(i);
                     dialog.dismiss();
 
@@ -84,7 +83,7 @@ public class LoadActivity extends AppCompatActivity {
 
     }
 
-    public void getLocation(String latlng){
+    public void getLocation(String latlng) {
         Call<LocationModel> req = ManagerAll.getInstance().getLocation(latlng);
         req.enqueue(new Callback<LocationModel>() {
             @Override
@@ -92,24 +91,29 @@ public class LoadActivity extends AppCompatActivity {
 
                 active_row_count = dbHelper.getActiveRowCount();
                 active_city_list = dbHelper.activeCities();
-                locationCity = response.body().getResults().get(0).getAddressComponents().get(4).getShortName();
-                if (active_row_count==0){
-                    dbHelper.activeCityWithName("1",locationCity);
+                if (response.body().getResults().get(0).getAddressComponents().get(4).getShortName() != null) {
+                    locationCity = response.body().getResults().get(0).getAddressComponents().get(4).getShortName();
+                }
+
+                if (active_row_count == 0) {
+                    dbHelper.activeCityWithName("1", locationCity);
                     active_city_list = dbHelper.activeCities();
-                }else if(active_row_count>0){
+                } else if (active_row_count > 0) {
                     ArrayList<HashMap<String, String>> temp_active_city = new ArrayList<>();
                     temp_active_city = dbHelper.activeCities();
-                    Log.e("getLocation","büyüktür sıfıra girdi");
-                    Log.e("getLocation3",temp_active_city.toString());
-                    for (int i = 0; i<temp_active_city.size(); i++){
-                        if (temp_active_city.get(i).get("il").equals(locationCity)){
-                            for (int j = 0;j<active_city_list.size(); j++){
-                                if (active_city_list.get(i).get("il").equals(locationCity)){
-                                    Collections.swap(active_city_list,i,0);
+                    Log.e("getLocation", "büyüktür sıfıra girdi");
+                    Log.e("getLocation3", temp_active_city.toString());
+                    for (int i = 0; i < temp_active_city.size(); i++) {
+                        if (temp_active_city.get(i).get("il").equals(locationCity)) {
+                            while (!active_city_list.get(0).get("il").equals(locationCity)) {
+                                for (int j = 0; j < active_city_list.size(); j++) {
+                                    if (active_city_list.get(i).get("il").equals(locationCity)) {
+                                        Collections.swap(active_city_list, i, 0);
+                                    }
                                 }
                             }
-                        }else{
-                            dbHelper.activeCityWithName("1",locationCity);
+                        } else {
+                            dbHelper.activeCityWithName("1", locationCity);
                         }
                     }
                     active_row_count = dbHelper.getActiveRowCount();
@@ -120,12 +124,12 @@ public class LoadActivity extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        Intent i = new Intent(LoadActivity.this,MainActivity.class);
+                        Intent i = new Intent(LoadActivity.this, MainActivity.class);
                         startActivity(i);
                         dialog.dismiss();
 
                     }
-                }, 1000);
+                }, 500);
 
                 /*if (isAdd){
                     dbHelper.activeCityWithName("1",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
@@ -133,9 +137,10 @@ public class LoadActivity extends AppCompatActivity {
                     dbHelper.activeCityWithName("0",response.body().getResults().get(0).getAddressComponents().get(4).getShortName());
                 }*/
             }
+
             @Override
             public void onFailure(Call<LocationModel> call, Throwable t) {
-                Log.e("TAG:",t.toString());
+                Log.e("TAG:", t.toString());
             }
         });
     }

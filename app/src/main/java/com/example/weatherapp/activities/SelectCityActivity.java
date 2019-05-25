@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import static com.example.weatherapp.activities.LoadActivity.active_city_list;
+import static com.example.weatherapp.activities.LoadActivity.locationCity;
+
 public class SelectCityActivity extends AppCompatActivity {
 
     private RecyclerView citiesRV;
@@ -39,6 +42,14 @@ public class SelectCityActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        while (!active_city_list.get(0).get("il").equals(locationCity)) {
+                for (int i = 0; i < active_city_list.size(); i++) {
+                    if (active_city_list.get(i).get("il").equals(locationCity)) {
+                        Collections.swap(active_city_list, i, 0);
+                }
+            }
+        }
+        active_city_list = dbHelper.activeCities();
         Intent i = new Intent(SelectCityActivity.this,LoadActivity.class);
         startActivity(i);
     }
