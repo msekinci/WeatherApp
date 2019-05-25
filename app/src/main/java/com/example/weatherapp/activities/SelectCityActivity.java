@@ -3,22 +3,14 @@ package com.example.weatherapp.activities;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapters.CitiesAdapter;
 import com.example.weatherapp.data.DbHelper;
@@ -42,6 +34,9 @@ public class SelectCityActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        //Şehir seçtikten sonra GPS durumuna göre konumu en ön sıraya çıkaracak
+
         if (LoadActivity.gps_state){
             while (!active_city_list.get(0).get("il").equals(locationCity)) {
                 for (int i = 0; i < active_city_list.size(); i++) {
@@ -55,11 +50,16 @@ public class SelectCityActivity extends AppCompatActivity {
         Intent i = new Intent(SelectCityActivity.this,LoadActivity.class);
         startActivity(i);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
+
+        definitions();
+
+    }
+
+    public void definitions(){
         search = findViewById(R.id.search_button);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,9 +79,7 @@ public class SelectCityActivity extends AppCompatActivity {
         progressDialog.dismiss();
         citiesAdapter = new CitiesAdapter(SelectCityActivity.this,all_cities_list);
         citiesRV.setAdapter(citiesAdapter);
-
     }
-
     public void openSearchAlert(){
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.search_layout,null);

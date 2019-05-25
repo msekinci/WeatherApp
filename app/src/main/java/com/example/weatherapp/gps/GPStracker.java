@@ -18,9 +18,7 @@ public class GPStracker implements LocationListener {
     public GPStracker(Context c){
         this.context=c;
     }
-
     public Location getLocation(){
-
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             Toast.makeText(context, "Konum servislerini kullanabilmek için lütfen izin veriniz!", Toast.LENGTH_SHORT).show();
             return null;
@@ -34,7 +32,6 @@ public class GPStracker implements LocationListener {
             return l;
         }else{
 
-            //GPS kapalıysa
         }
         return null;
     }

@@ -1,6 +1,5 @@
 package com.example.weatherapp.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,8 +26,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,8 +45,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
+        //Ekranda gösterilecek şehirin itemnosu
         Bundle bundle = getArguments();
         int pageNumber = bundle.getInt("pageNumber");
 
@@ -59,10 +55,8 @@ public class HomeFragment extends Fragment {
         ruzgarhiziText = view.findViewById(R.id.ruzgarhiziText);
         ruzgaryonuText = view.findViewById(R.id.ruzgaryonuText);
 
-
         return view;
     }
-
     public void getCityInformation(final String cityName) {
         Call<List<CityInformationModel>> request = ManagerAll.getInstance().getCityInformation(cityName);
         request.enqueue(new Callback<List<CityInformationModel>>() {
@@ -72,13 +66,11 @@ public class HomeFragment extends Fragment {
                     getDailyForecast(response.body().get(0).getSaatlikTahminIstNo(),response.body().get(0).getIl());
                 }
             }
-
             @Override
             public void onFailure(Call<List<CityInformationModel>> call, Throwable t) {
                 Log.e("TAG : ", t.getMessage());
                 Intent i = new Intent(getContext(), NoConnectionActivity.class);
                 startActivity(i);
-
             }
         });
     }
@@ -99,13 +91,15 @@ public class HomeFragment extends Fragment {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<List<DailyForecastModel>> call, Throwable t) {
 
             }
         });
     }
+
+
+    //Grafiksel Tasarım için
 
     public void pie(String cityName,String sicaklik,String nem, String ruzgarHizi, String ruzgarYonu){
         pieChart = view.findViewById(R.id.piechart);
@@ -122,7 +116,6 @@ public class HomeFragment extends Fragment {
         nemText.setText(nem);
         ruzgarhiziText.setText(ruzgarHizi);
         ruzgaryonuText.setText(ruzgarYonu);
-
 
         pieChart.setCenterTextSize(30f);
 

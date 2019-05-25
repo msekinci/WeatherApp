@@ -2,7 +2,6 @@ package com.example.weatherapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -14,13 +13,6 @@ import com.example.weatherapp.R;
 import com.example.weatherapp.ResApi.ManagerAll;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.LocationModel;
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,17 +24,12 @@ import retrofit2.Response;
 
 public class LoadActivity extends AppCompatActivity {
 
-    private DbHelper dbHelper;//
-    public static boolean gps_state;//
+    private DbHelper dbHelper;
+    public static boolean gps_state;
     GPStracker gpStracker;
     public static int active_row_count;
     public static String locationCity;
     public static ArrayList<HashMap<String, String>> active_city_list;
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +39,25 @@ public class LoadActivity extends AppCompatActivity {
         active_city_list = new ArrayList<>();
         active_city_list.clear();
 
+
+        //Konumu Kontrol Et ve Listelenecek verileri belirle
         dbHelper = new DbHelper(LoadActivity.this);
         gpStracker = new GPStracker(LoadActivity.this);
         Location l = gpStracker.getLocation();
-
         if (l != null) {
             gps_state = true;
             double lat = l.getLatitude();
             double lon = l.getLongitude();
             String latlng = String.valueOf(lat) + "," + String.valueOf(lon);
             getLocation(latlng);
-
         } else {
             gps_state = false;
             if (locationCity != null) {
                 dbHelper.activeCityWithName("0", locationCity);
             }
             active_row_count = dbHelper.getActiveRowCount();
-
             if (active_row_count > 0) {
                 active_city_list = dbHelper.activeCities();
-
             } else {
                 dbHelper.activeCityWithName("1", "İzmir");
                 active_city_list = dbHelper.activeCities();
@@ -91,10 +76,9 @@ public class LoadActivity extends AppCompatActivity {
                 }
             }, 1000);
         }
-
-
     }
 
+    //Location'u koordinat verilerine göre google'dan çekme işlemi
     public void getLocation(String latlng) {
         Call<LocationModel> req = ManagerAll.getInstance().getLocation(latlng);
         req.enqueue(new Callback<LocationModel>() {
@@ -140,7 +124,6 @@ public class LoadActivity extends AppCompatActivity {
                     }
                 }, 500);
             }
-
             @Override
             public void onFailure(Call<LocationModel> call, Throwable t) {
                 Log.e("TAG:", t.toString());

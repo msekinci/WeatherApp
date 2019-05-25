@@ -18,9 +18,6 @@ import com.example.weatherapp.R;
 import com.example.weatherapp.data.DbHelper;
 import com.example.weatherapp.models.LocationModel;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,15 +42,16 @@ public class SettingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (changeStatus){
 
+        //GPS ayarlarını telefon ayarlarından değiştirdikten sonra uygulamanın algılaması için
+
+        if (changeStatus){
             final ProgressDialog dialog = new ProgressDialog(SettingActivity.this);
             dialog.setMessage("GPS durumunuzu kontrol ederken lütfen biraz bekleyiniz");
             dialog.show();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-
 
                     GPStracker gpStracker = new GPStracker(SettingActivity.this);
                     Location l = gpStracker.getLocation();
@@ -75,9 +73,8 @@ public class SettingActivity extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
-            }, 5000);
+            }, 6000);
         }
-
     }
 
     @Override
@@ -92,10 +89,11 @@ public class SettingActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
 
+
+                //Konum Kontrolü
                 GPStracker gpStracker = new GPStracker(SettingActivity.this);
                 Location l = gpStracker.getLocation();
                 String message ;
-
                 if (l!=null){
                     message = "GPS Servisiniz Açık Durumdadır!";
                     aSwitch.setChecked(true);
@@ -110,7 +108,6 @@ public class SettingActivity extends AppCompatActivity {
                     message = "GPS Servisiniz Kapalı Durumdadır!";
                     aSwitch.setChecked(false);
                 }
-
                 dialog.dismiss();
                 Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
             }
@@ -134,7 +131,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-            //aSwitch.setChecked(MainActivity.gps_state);
     }
     public void getLocation(String latlng){
         Call<LocationModel> req = ManagerAll.getInstance().getLocation(latlng);

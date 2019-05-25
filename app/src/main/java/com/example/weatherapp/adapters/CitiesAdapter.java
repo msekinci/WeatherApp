@@ -25,13 +25,13 @@ import com.example.weatherapp.models.SuperClass;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder>{
+public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder> {
 
     Context context;
     ArrayList<HashMap<String, String>> all_cities_list;
     DbHelper dbHelper;
 
-    public CitiesAdapter(Context context,ArrayList<HashMap<String, String>> all_cities_list) {
+    public CitiesAdapter(Context context, ArrayList<HashMap<String, String>> all_cities_list) {
         this.context = context;
         this.all_cities_list = all_cities_list;
     }
@@ -39,7 +39,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.city_item_layout,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.city_item_layout, null);
 
         dbHelper = new DbHelper(context);
 
@@ -50,31 +50,28 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
         //holder.cityName.setText((cities.get(position).getCityName()));
 
         holder.cityName.setText(all_cities_list.get(position).get("il"));
-
-
-        if (all_cities_list.get(position).get("durum").equals("1")){
+        if (all_cities_list.get(position).get("durum").equals("1")) {
             holder.cityCheckBox.setChecked(true);
-        }
-        else{
+        } else {
             holder.cityCheckBox.setChecked(false);
         }
         holder.cityCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (holder.cityCheckBox.isChecked()){
-                    dbHelper.activeCityWithName("1",all_cities_list.get(position).get("il"));
-                }else {
-                    if (all_cities_list.get(position).get("il").equalsIgnoreCase(LoadActivity.locationCity)){
-                        if (!holder.cityCheckBox.isChecked()){
+                if (holder.cityCheckBox.isChecked()) {
+                    dbHelper.activeCityWithName("1", all_cities_list.get(position).get("il"));
+                } else {
+                    if (all_cities_list.get(position).get("il").equalsIgnoreCase(LoadActivity.locationCity)) {
+                        if (!holder.cityCheckBox.isChecked()) {
                             Toast.makeText(context, "Konumunuz açık olduğundan bu şehir kaldırılamıyor!", Toast.LENGTH_SHORT).show();
                             holder.cityCheckBox.setChecked(true);
                         }
                     }
-                    dbHelper.activeCityWithName("0",all_cities_list.get(position).get("il"));
-                    if (dbHelper.getActiveRowCount()==0){
+                    dbHelper.activeCityWithName("0", all_cities_list.get(position).get("il"));
+                    if (dbHelper.getActiveRowCount() == 0) {
                         Toast.makeText(context, "Hiç bir şehir kalmadığı için otomatik olarak İzmir eklendi!", Toast.LENGTH_LONG).show();
-                        dbHelper.activeCityWithName("1","İzmir");
+                        dbHelper.activeCityWithName("1", "İzmir");
                         Intent i = new Intent(context, SelectCityActivity.class);
                         context.startActivity(i);
                     }
@@ -88,11 +85,10 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
         return all_cities_list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView cityName;
         CheckBox cityCheckBox;
-
 
         //itemview ile listview in her elamanu için layout ile oluşturduğumuz view tanımlaması
         public ViewHolder(View itemView) {
