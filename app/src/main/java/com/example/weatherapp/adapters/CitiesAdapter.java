@@ -67,8 +67,10 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.ViewHolder
                             Toast.makeText(context, "Konumunuz açık olduğundan bu şehir kaldırılamıyor!", Toast.LENGTH_SHORT).show();
                             holder.cityCheckBox.setChecked(true);
                         }
-                    }
+                    }else
                     dbHelper.activeCityWithName("0", all_cities_list.get(position).get("il"));
+
+
                     if (dbHelper.getActiveRowCount() == 0) {
                         Toast.makeText(context, "Hiç bir şehir kalmadığı için otomatik olarak İzmir eklendi!", Toast.LENGTH_LONG).show();
                         dbHelper.activeCityWithName("1", "İzmir");
